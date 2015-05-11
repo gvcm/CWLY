@@ -17,9 +17,13 @@ Response:
 
 ## Short URL
 
+Request:
+
 ```
 http://cw.gl/a
 ```
+
+URL redirection:
 
 ```
 http://crystalwalk.herokuapp.com/#a
