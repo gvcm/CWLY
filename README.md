@@ -11,7 +11,7 @@ curl --data 'url=http://crystalwalk.herokuapp.com&data="{\"name\":\"Hello\",\"ti
 
 Response:
 
-```
+```json
 {"slug":"a"}
 ```
 
@@ -27,6 +27,14 @@ http://crystalwalk.herokuapp.com/#a
 
 ## Data
 
+Request:
+
 ```
 http://cw.gl/a.json
+```
+
+Response:
+
+```json
+{"data":{"name":"Hello","title":"World"}}
 ```
