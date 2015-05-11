@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   def show
     document = Document.find_by_slug params[:slug]
-    return render nothing: true if document.url.blank?
+    return render nothing: true if document.nil? or document.url.blank?
     respond_to do |format|
      format.html { redirect_to document.url_frag, status: :moved_permanently }
      format.json { render json: { data: document.data } }
