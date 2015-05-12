@@ -34,13 +34,7 @@ class ApplicationController < ActionController::Base
   def cors
     origin = request.headers['Origin']
     unless origin.blank?
-      if @document
-        if origin.index(@document.origin)===0
-          headers['Access-Control-Allow-Origin'] = @document.origin
-        end
-      else
-        headers['Access-Control-Allow-Origin'] = '*'
-      end
+      headers['Access-Control-Allow-Origin'] = '*'
     end
   end
 
