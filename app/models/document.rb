@@ -2,10 +2,6 @@ class Document < ActiveRecord::Base
 
   after_create :slug_g
 
-  # def data=(data)
-  #   self[:data] = data.is_a?(String) ? data.to_json : data
-  # end
-
   def destination
     return if self.url.blank?
     uri = URI.parse(self.url)
