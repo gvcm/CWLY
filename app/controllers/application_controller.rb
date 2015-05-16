@@ -16,8 +16,16 @@ class ApplicationController < ActionController::Base
 
   def create
     @document = Document.new
-    @document.url = params[:url]
-    @document.data = params[:data]
+    begin
+      @document.url = params[:url] unless params[:url].empty?
+    rescue Exception => e
+      return render json: { error: e.message }, status: :bad_request
+    end
+    begin
+      @document.data = JSON.parse(params[:data]) unless params[:data].empty?
+    rescue Exception => e
+      return render json: { error: e.message }, status: :bad_request
+    end
     if @document.save
       render json: { slug: @document.slug }
     else
