@@ -9,4 +9,6 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
   config.log_formatter = ::Logger::Formatter.new
   config.active_record.dump_schema_after_migration = false
+  config.assets.compile = false
+  config.assets.digest = true
 end

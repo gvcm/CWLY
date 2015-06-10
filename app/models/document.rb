@@ -2,6 +2,17 @@ class Document < ActiveRecord::Base
 
   after_create :slug_g
 
+  # def self.search(field, value)
+  #   self.where("data->>'#{field}' = ?", value)
+  # end
+
+  # Document.search({ projectName: 'm2sjZ' })
+  def self.search(args)
+    Document.where("data @> ?", args.to_json)
+  end
+
+  # Document.where("data->'tags' ? :tag", tag: 'x')
+
   def destination
     return if self.url.blank?
     uri = URI.parse(self.url)
