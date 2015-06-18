@@ -142,3 +142,6 @@ DEPENDENCIES
   rails-assets-foundation!
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
+
+BUNDLED WITH
+   1.10.3
