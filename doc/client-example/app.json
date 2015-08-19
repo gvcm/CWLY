@@ -1,0 +1,6 @@
+{
+  "name": "cwgl-client",
+  "description": "cw.gl client",
+  "repository": "https://github.com/gvcm/cwgl-client",
+  "keywords": ["cw.gl", "client"]
+}

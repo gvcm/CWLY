@@ -1,0 +1,24 @@
+{
+  "name": "cwgl-client",
+  "version": "0.1.0",
+  "description": "cw.gl client",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "~4.9.x"
+  },
+  "engines": {
+    "node": "0.12.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gvcm/cwgl-client"
+  },
+  "keywords": [
+    "cw.gl",
+    "client"
+  ],
+  "license": "MIT"
+}
