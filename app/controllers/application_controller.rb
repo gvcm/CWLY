@@ -3,7 +3,12 @@ class ApplicationController < ActionController::Base
   before_filter :cors, only: [ :show, :create ]
 
   def index
-    render nothing: true
+    @document = Document.first
+    if @document
+      redirect_to action: :show, slug: @document.slug
+    else
+      render nothing: true
+    end
   end
 
   def show
