@@ -6,5 +6,5 @@ Rails.application.routes.draw do
   end
   get ':slug' => 'application#show', slug: /[a-z0-9]{1,8}/
   post 'add' => 'application#create', format: false
-  get ':default' => 'application#index', format: false, default: /.*/
+  root 'application#index'
 end

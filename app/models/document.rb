@@ -2,16 +2,20 @@ class Document < ActiveRecord::Base
 
   after_create :slug_g
 
-  # def self.search(field, value)
-  #   self.where("data->>'#{field}' = ?", value)
-  # end
-
-  # Document.search({ projectName: 'm2sjZ' })
-  def self.search(args)
-    Document.where("data @> ?", args.to_json)
+  def self.containing(args)
+    where("data @> ?", args.to_json)
   end
-
-  # Document.where("data->'tags' ? :tag", tag: 'x')
+  
+  def self.containing_values(args)
+    path, values = flat_hash(args).flatten
+    query = <<-EOS
+      #{primary_key} IN (
+        SELECT #{primary_key}
+        FROM #{table_name}, jsonb_each_text(#{table_name}.data#>?) AS obj
+        WHERE obj.value IN (?))
+    EOS
+    where(query, "{#{path.join(',')}}", values)
+  end
 
   def destination
     return if self.url.blank?
@@ -31,6 +35,12 @@ class Document < ActiveRecord::Base
   end
 
   protected
+
+  def self.flat_hash(h,f=[],g={})
+    return g.update({ f=>h }) unless h.is_a? Hash
+    h.each { |k,r| flat_hash(r,f+[k],g) }
+    g
+  end
 
   def slug_g
     self.update_attributes(slug: self.id.to_s(36))

@@ -3,11 +3,16 @@ class ApplicationController < ActionController::Base
   before_filter :cors, only: [ :show, :create ]
 
   def index
-    @document = Document.first
-    if @document
-      redirect_to action: :show, slug: @document.slug
-    else
-      render nothing: true
+    qs = params[:qs]
+    qv = params[:qv]
+    start = params[:start] || 0
+    @documents = Document
+    @documents = @documents.containing(qs) if qs
+    @documents = @documents.containing_values(qv) if qv
+    @documents = @documents.limit(10).offset(start).all
+    respond_to do |format|
+     format.html { render nothing: true }
+     format.json { render json: { documents: @documents } }
     end
   end
 
@@ -50,5 +55,5 @@ class ApplicationController < ActionController::Base
       headers['Access-Control-Allow-Origin'] = '*'
     end
   end
-
+  
 end
