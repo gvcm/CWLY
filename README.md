@@ -7,13 +7,13 @@ CWLY
 curl https://cwgl.herokuapp.com?format=json
 ```
 
-Search by name "Project Name":
+Search by name "Project Name" (```qs={"info":{"name":"Project Name"}}```):
 
 ```
 curl https://cwgl.herokuapp.com?format=json&qs=%7B%22info%22:%7B%22name%22:%22Project%20Name%22%7D%7D
 ```
 
-Search by tags 'carbon' OR 'cubic':
+Search by tags 'carbon' OR 'cubic' (```qv={"info":{"tags":["carbon","cubic"]}}```):
 
 ```
 curl https://cwgl.herokuapp.com?format=json&qv=%7B%22info%22:%7B%22tags%22:[%22carbon%22,%22cubic%22]%7D%7D
