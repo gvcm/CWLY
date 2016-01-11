@@ -28,7 +28,7 @@ RSpec.describe ApplicationController, type: :controller do
         document["data"]["name"] = "special"
         document.save
       end
-      get :index, format: :json, qs: {name:"special"}
+      get :index, format: :json, qs: {name:"special"}.to_json
       parsed = JSON.parse(response.body)
       documents = parsed["documents"]
       special = documents.map { |d| d["data"]["name"] }.uniq.shift
@@ -42,7 +42,7 @@ RSpec.describe ApplicationController, type: :controller do
         document["data"]["tags"] = {"t1": "a", "t2": "b"}
         document.save
       end
-      get :index, format: :json, qv: {tags:["a", "b"]}
+      get :index, format: :json, qv: {tags:["a", "b"]}.to_json
       parsed = JSON.parse(response.body)
       documents = parsed["documents"]
       tags = documents.map { |d| d["data"]["tags"].values }.uniq.shift

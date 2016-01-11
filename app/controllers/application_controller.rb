@@ -7,9 +7,9 @@ class ApplicationController < ActionController::Base
     qv = params[:qv]
     start = params[:start] || 0
     @documents = Document
-    @documents = @documents.containing(qs) if qs
-    @documents = @documents.containing_values(qv) if qv
-    @documents = @documents.limit(10).offset(start).all
+    @documents = @documents.containing(JSON.parse(qs)) if qs
+    @documents = @documents.containing_values(JSON.parse(qv)) if qv
+    @documents = @documents.order(updated_at: :desc).limit(10).offset(start).all
     respond_to do |format|
      format.html { render nothing: true }
      format.json { render json: { documents: @documents } }
