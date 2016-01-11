@@ -21,14 +21,14 @@ RSpec.describe ApplicationController, type: :controller do
       expect(parsed["documents"].length).to eq(10)
     end
 
-    it "list documents containing string" do
+    it "list documents containing text" do
       @documents = documents
       5.times do
         document = @documents.shuffle.first
         document["data"]["name"] = "special"
         document.save
       end
-      get :index, format: :json, qs: {name:"special"}.to_json
+      get :index, format: :json, qs: {name:"Spec"}.to_json
       parsed = JSON.parse(response.body)
       documents = parsed["documents"]
       special = documents.map { |d| d["data"]["name"] }.uniq.shift

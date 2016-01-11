@@ -5,6 +5,19 @@ class Document < ActiveRecord::Base
   def self.containing(args)
     where("data @> ?", args.to_json)
   end
+
+  def self.containing_text(args)
+    path, text = flat_hash(args).flatten
+    query = <<-EOS
+      #{primary_key} IN (
+        SELECT #{primary_key}
+        FROM #{table_name}, jsonb_extract_path_text(
+          #{table_name}.data, #{path.length.times.map { "?" }.join(", ")}) AS txt
+        WHERE txt ILIKE ?
+      )
+    EOS
+    where(query, *path, "%#{text}%")
+  end
   
   def self.containing_values(args)
     path, values = flat_hash(args).flatten
@@ -12,7 +25,8 @@ class Document < ActiveRecord::Base
       #{primary_key} IN (
         SELECT #{primary_key}
         FROM #{table_name}, jsonb_each_text(#{table_name}.data#>?) AS obj
-        WHERE obj.value IN (?))
+        WHERE obj.value IN (?)
+      )
     EOS
     where(query, "{#{path.join(',')}}", values)
   end

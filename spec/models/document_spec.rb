@@ -35,13 +35,24 @@ RSpec.describe Document, :type => :model do
     end
   end
 
+  describe ".containing_text" do
+    it "data path containing text" do
+      document = Document.create!(
+        url: "http://example.com",
+        data: JSON.parse('{"pid":1024,"info":{"name":"Another","cost":0.99}}')
+      )
+      found = Document.containing_text({info:{name:"Other"}}).last
+      expect(found).to eq(document)
+    end
+  end
+
   describe ".containing_values" do
     it "data path containing values" do
       document = Document.create!(
         url: "http://example.com",
         data: JSON.parse('{"info":{"tags":{"tag0":"foo","tag1":"bar"}},"description":"foobar"}')
       )
-      found = Document.containing_values({info:{tags:['bar']}}).last
+      found = Document.containing_values({info:{tags:["bar"]}}).last
       expect(found).to eq(document)
     end
   end
