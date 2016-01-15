@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   before_filter :document, only: :show
-  before_filter :cors, only: [ :show, :create ]
+  before_filter :cors, only: [ :index, :show, :create ]
 
   def index
     qs = params[:qs]
