@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
     @documents = @documents.containing_values(JSON.parse(qv)) if qv
     @documents = @documents.order(updated_at: :desc).limit(10).offset(start).all
     respond_to do |format|
-     format.html { render nothing: true }
+     format.html { redirect_to document_path(slug: Document.first.slug, status: :moved_permanently) }
      format.json { render json: { documents: @documents } }
     end
   end
