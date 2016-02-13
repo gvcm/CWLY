@@ -25,10 +25,10 @@ class Document < ActiveRecord::Base
       #{primary_key} IN (
         SELECT #{primary_key}
         FROM #{table_name}, jsonb_each_text(#{table_name}.data#>?) AS obj
-        WHERE obj.value IN (?)
+        WHERE UPPER(obj.value) IN (?)
       )
     EOS
-    where(query, "{#{path.join(',')}}", values)
+    where(query, "{#{path.join(',')}}", values.map { |v| v.upcase })
   end
 
   def destination
