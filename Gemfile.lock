@@ -165,5 +165,8 @@ DEPENDENCIES
   sass-rails (~> 5.0)
   sdoc (~> 0.4)
 
+RUBY VERSION
+   ruby 2.4.1p111
+
 BUNDLED WITH
    1.15.1
