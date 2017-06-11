@@ -1,13 +1,13 @@
 default: &default
   adapter: postgresql
+  username: cwgl
+  password: cwgl
   encoding: unicode
   pool: 5
 
 development:
   <<: *default
   database: cwgl_development
-  username: cwgl
-  password: cwgl
   host: localhost
   port: 5432
 
