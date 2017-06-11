@@ -48,6 +48,11 @@ class Document < ActiveRecord::Base
     origin.to_s
   end
 
+  def file(ext)
+    content = data.fetch('files') { {} }[ext]
+    Base64.decode64(content) unless content.nil?
+  end
+
   protected
 
   def self.flat_hash(h,f=[],g={})

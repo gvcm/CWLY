@@ -3,16 +3,11 @@ class ApplicationController < ActionController::Base
   before_filter :cors, only: [ :index, :show, :create ]
 
   def index
-    qs = params[:qs]
-    qv = params[:qv]
-    start = params[:start] || 0
-    @documents = Document
-    @documents = @documents.containing_text(JSON.parse(qs)) if qs
-    @documents = @documents.containing_values(JSON.parse(qv)) if qv
-    @documents = @documents.order(updated_at: :desc).limit(10).offset(start).all
+    return head(:not_found) unless Document.any?
+
     respond_to do |format|
-     format.html { redirect_to document_path(slug: Document.first.slug, status: :moved_permanently) }
-     format.json { render json: { documents: @documents } }
+     format.html { redirect_to document_path(slug: default_document.slug, status: :moved_permanently) }
+     format.json { render json: { documents: query_documents } }
     end
   end
 
@@ -21,6 +16,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
      format.html { redirect_to @document.destination, status: :moved_permanently }
      format.json { render json: { data: @document.data } }
+     format.any  { @document.file(params['format']) ? send_data(@document.file(params['format']), type: format.format, filename: "#{@document.slug}.#{params['format']}") : head(:not_found) }
     end
   end
 
@@ -45,6 +41,23 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def default_document
+    Document.first
+  end
+
+  def query_documents
+    qs = params[:qs]
+    qv = params[:qv]
+    start = params[:start] || 0
+
+    @documents = Document
+    @documents = @documents.containing_text(JSON.parse(qs)) if qs
+    @documents = @documents.containing_values(JSON.parse(qv)) if qv
+    @documents = @documents.order(updated_at: :desc).limit(10).offset(start).all
+
+    @documents
+  end
+  
   def document
     @document = Document.find_by_slug params[:slug]
   end

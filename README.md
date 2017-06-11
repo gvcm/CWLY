@@ -24,7 +24,7 @@ curl -G --data-urlencode 'qv={"info":{"tags":["carbon","cubic"]}}' --data-urlenc
 Request:
 
 ```
-curl --data 'url=https%3A%2F%2Fcrystalwalk.herokuapp.com&data=%7B%22s%22%3A%22hello%22%2C%22p%22%3A2%2C%22q%22%3A3%7D' https://cwgl.herokuapp.com/add
+curl --data-urlencode 'url=https://crystalwalk.herokuapp.com' --data-urlencode 'data={"s":"hello","p":2,"q":3}' https://cwgl.herokuapp.com/add
 ```
 
 Response:
@@ -59,4 +59,15 @@ Response:
 
 ```json
 {"data":{"name":"Hello","title":"World"}}
+```
+
+## Files
+
+```
+curl --data-urlencode 'url=https://crystalwalk.herokuapp.com' --data-urlencode 'data={"files":{"txt":"aGVsbG8K"}}' https://cwgl.herokuapp.com/add
+```
+
+```
+curl -vvv https://cwgl.herokuapp.com/….txt
+# => hello
 ```
