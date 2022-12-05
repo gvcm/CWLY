@@ -168,7 +168,7 @@ DEPENDENCIES
   sdoc (~> 1.0.0)
 
 RUBY VERSION
-   ruby 2.5.7
+   ruby 2.7.4
 
 BUNDLED WITH
    1.16.1
