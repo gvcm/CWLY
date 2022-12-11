@@ -1,6 +1,8 @@
-class ApplicationController < ActionController::Base
-  before_filter :document, only: :show
-  before_filter :cors, only: [ :index, :show, :create ]
+class ApplicationController < ActionController::API
+  include ActionController::MimeResponds
+
+  before_action :document, only: :show
+  before_action :cors, only: [ :index, :show, :create ]
 
   def index
     return head(:not_found) unless Document.any?
@@ -39,7 +41,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  protected
+protected
 
   def default_document
     Document.first
@@ -68,5 +70,4 @@ class ApplicationController < ActionController::Base
       headers['Access-Control-Allow-Origin'] = '*'
     end
   end
-  
 end

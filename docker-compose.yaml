@@ -1,0 +1,28 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./tmp/db:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: cwly
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: CWLY_development
+  web:
+    build: .
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: development
+    depends_on:
+      - db
+  migration:
+    build: .
+    command: ["rake", "db:migrate"]
+    depends_on:
+      - web
+      - db
