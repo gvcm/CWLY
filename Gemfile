@@ -28,3 +28,4 @@ group :development do
   # gem "spring"
 end
 
+gem "google-cloud-firestore", "~> 2.7.2"
