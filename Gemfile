@@ -1,18 +1,31 @@
-source 'https://rubygems.org'
-ruby "2.7.4"
+source "https://rubygems.org"
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '4.2.11.1'
-gem 'pg', '~> 0.20.0'
-gem 'sass-rails', '~> 5.0.7'
-gem 'jbuilder', '~> 2.4.1'
-gem 'sdoc', '~> 1.0.0', group: :doc
-gem 'puma'
+ruby "3.1.3"
+
+# Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
+gem "rails", "~> 7.0.4"
+
+# Use postgresql as the database for Active Record
+gem "pg", "~> 1.1"
+
+# Use the Puma web server [https://github.com/puma/puma]
+gem "puma", "~> 5.0"
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
+
+# Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
+# gem "rack-cors"
 
 group :development, :test do
-  gem 'pry-rails'
-  gem 'rspec-rails', '~> 3.0'
+  # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
+  gem "debug", platforms: %i[ mri mingw x64_mingw ]
 end
 
-group :production do
-  gem 'rails_12factor'
+group :development do
+  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
+  # gem "spring"
 end
+
+gem "google-cloud-firestore", "~> 2.7.2"

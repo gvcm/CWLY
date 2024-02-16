@@ -1,5 +1,4 @@
-class Document < ActiveRecord::Base
-
+class Document < ApplicationRecord
   after_create :slug_g
 
   def self.containing(args)
@@ -53,7 +52,7 @@ class Document < ActiveRecord::Base
     Base64.decode64(content) unless content.nil?
   end
 
-  protected
+protected
 
   def self.flat_hash(h,f=[],g={})
     return g.update({ f=>h }) unless h.is_a? Hash
@@ -62,7 +61,6 @@ class Document < ActiveRecord::Base
   end
 
   def slug_g
-    self.update_attributes(slug: self.id.to_s(36))
+    self.update_attribute(:slug, self.id.to_s(36))
   end
-
 end
