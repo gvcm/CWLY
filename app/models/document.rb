@@ -62,7 +62,7 @@ class Document < ActiveRecord::Base
   end
 
   def slug_g
-    self.update_attributes(slug: self.id.to_s(36))
+    self.update(slug: self.id.to_s(36))
   end
 
 end

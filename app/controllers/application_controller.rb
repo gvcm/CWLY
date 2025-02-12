@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
-  before_filter :document, only: :show
-  before_filter :cors, only: [ :index, :show, :create ]
+  before_action :document, only: :show
+  before_action :cors, only: [ :index, :show, :create ]
+  skip_forgery_protection
 
   def index
     return head(:not_found) unless Document.any?
